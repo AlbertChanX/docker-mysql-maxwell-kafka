@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  mysql_max:
+    build: mysql/
+    container_name: mysql_max
+    # environment:
+    #   - MYSQL_ROOT_PASSWORD=root
+    # ports:
+    #   - 3306:3306
+    volumes:
+      - ./mysql/conf.d:/etc/mysql/conf.d/
+    restart: always
+  
+  maxwell:
+    image: zendesk/maxwell
+    container_name: maxwell
+    command: bin/maxwell --config /etc/maxwell/config.properties 
+    # --daemon
+    # --kafka.bootstrap.servers=kafka:9092 --kafka_topic=maxwell
+    # env_file:
+    volumes: 
+      - ./maxwell:/etc/maxwell/
+    links:
+      - redis
+      - mysql_max
+    depends_on:
+      - mysql_max
+      - redis
+  
+  # kafka: 
+  #   build: kafka/
+  #   container_name: kafka
+  #   environment:
+
+  redis:
+    container_name: redis4maxwell
+    image: redis:4.0.10
+    restart: always
+
