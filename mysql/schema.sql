@@ -16,5 +16,4 @@ CREATE TABLE `user` (
 );
 
 INSERT INTO `user` (`id`, `created_at`, `last_modified`, `email`, `first_name`, `last_name`, `username`)
-VALUES
-  (0,1,1,'chan@example.com','Lee','Chan','user');
+VALUES (0, 1, 1,'chan@example.com', 'Lee', 'Chan', 'user');
